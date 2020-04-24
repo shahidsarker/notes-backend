@@ -57,15 +57,10 @@ app.get("/api/notes/:id", (req, res, next) => {
 });
 
 app.delete("/api/notes/:id", (req, res) => {
-  const id = Number(req.params.id);
-  notes = notes.filter((note) => note.id !== id);
-  res.status(204).end();
+  Note.findByIdAndRemove(req.params.id)
+    .then((result) => res.status(204).end())
+    .catch((error) => next(error));
 });
-
-const generateId = () => {
-  const maxId = notes.length > 0 ? Math.max(...notes.map((n) => n.id)) : 0;
-  return maxId + 1;
-};
 
 app.post("/api/notes", (req, res) => {
   const body = req.body;
@@ -81,8 +76,6 @@ app.post("/api/notes", (req, res) => {
   });
 
   note.save().then((savedNote) => res.json(savedNote.toJSON()));
-  // console.log(note);
-  // res.json(note);
 });
 
 app.get("/api/notes", (req, res) => {
