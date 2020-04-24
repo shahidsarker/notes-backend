@@ -56,13 +56,13 @@ app.get("/api/notes/:id", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-app.delete("/api/notes/:id", (req, res) => {
+app.delete("/api/notes/:id", (req, res, next) => {
   Note.findByIdAndRemove(req.params.id)
     .then((result) => res.status(204).end())
     .catch((error) => next(error));
 });
 
-app.put("/api/notes/:id", (req, res) => {
+app.put("/api/notes/:id", (req, res, next) => {
   const body = req.body;
 
   const note = {
