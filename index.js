@@ -69,20 +69,19 @@ const generateId = () => {
 app.post("/api/notes", (req, res) => {
   const body = req.body;
 
-  if (!body.content) {
+  if (body.content === undefined) {
     return res.status(400).json({ error: "content missing" });
   }
 
-  const note = {
+  const note = new Note({
     content: body.content,
     important: body.important || false,
     date: new Date(),
-    id: generateId(),
-  };
+  });
 
-  notes = notes.concat(note);
-  console.log(note);
-  res.json(note);
+  note.save().then((savedNote) => res.json(savedNote.toJSON()));
+  // console.log(note);
+  // res.json(note);
 });
 
 app.get("/api/notes", (req, res) => {
