@@ -48,11 +48,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/notes/:id", (req, res) => {
-  const id = Number(req.params.id);
-
-  const note = notes.find((note) => note.id === id);
-  if (note) res.json(note);
-  else res.status(404).end();
+  Note.findById(req.params.id).then((note) => {
+    res.json(note.toJSON());
+  });
 });
 
 app.delete("/api/notes/:id", (req, res) => {
