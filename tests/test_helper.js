@@ -4,12 +4,10 @@ const initialNotes = [
   {
     content: "HTML is easy",
     important: false,
-    date: Date.now(),
   },
   {
     content: "Browser can execute only JavaScript",
     important: true,
-    date: Date.now(),
   },
 ];
 
