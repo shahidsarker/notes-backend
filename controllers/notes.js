@@ -6,13 +6,10 @@ notesRouter.get("/", async (req, res) => {
   res.json(notes.map((note) => note.toJSON()));
 });
 
-notesRouter.get("/:id", (req, res, next) => {
-  Note.findById(req.params.id)
-    .then((note) => {
-      if (note) res.json(note.toJSON());
-      else res.status(404).end();
-    })
-    .catch((error) => next(error));
+notesRouter.get("/:id", async (req, res, next) => {
+  const note = await Note.findById(req.params.id);
+  if (note) res.json(note.toJSON());
+  else res.status(404).end();
 });
 
 notesRouter.post("/", (req, res, next) => {
