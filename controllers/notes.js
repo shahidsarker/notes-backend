@@ -12,7 +12,7 @@ notesRouter.get("/:id", async (req, res, next) => {
   else res.status(404).end();
 });
 
-notesRouter.post("/", (req, res, next) => {
+notesRouter.post("/", async (req, res, next) => {
   const body = req.body;
 
   const note = new Note({
@@ -21,12 +21,12 @@ notesRouter.post("/", (req, res, next) => {
     date: new Date(),
   });
 
-  note
-    .save()
-    .then((savedNote) => {
-      res.json(savedNote.toJSON());
-    })
-    .catch((error) => next(error));
+  try {
+    const savedNote = await note.save();
+    res.json(savedNote.toJSON());
+  } catch (exception) {
+    next(exception);
+  }
 });
 
 notesRouter.delete("/:id", (req, res, next) => {
