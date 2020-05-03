@@ -170,4 +170,6 @@ describe("when there is initially one user in db", () => {
   });
 });
 
+test.todo("validate passwords");
+
 afterAll(() => mongoose.connection.close());
